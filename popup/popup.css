@@ -1,0 +1,8 @@
+body {
+  width: 300px;
+  padding: 20px;
+  background-color: #f8f9fa; /* Bootstrap's background color */
+  font-family: "Helvetica Neue", sans-serif;
+  color: #495057; /* Bootstrap's text color */
+  min-height: 300px;
+}
