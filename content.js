@@ -89,19 +89,26 @@ function sendDataToAPI(data) {
   })
     .then((response) => {
       if (response.ok) {
-        console.log("Product created successfully");
+        return response.json();
       } else {
-        console.error("Failed to create product");
+        throw new Error("Failed to create product");
       }
     })
+    .then((responseData) => {
+      console.log(responseData);
+    })
     .catch((error) => {
-      console.error("Error:", error);
+      console.error("Error:", error.message);
     });
 }
 
 function init() {
-  // Check if the URL contains 'sapphire'
-  if (window.location.href.includes("sapphire")) {
+  const currentUrl = window.location.href;
+  const urlPattern = /\/collections\/.*\/products\/[a-zA-Z0-9-]+$/;
+  const isProductDetailPage = urlPattern.test(currentUrl);
+  const isSapphirePage = currentUrl.includes("sapphire");
+
+  if (isProductDetailPage && isSapphirePage) {
     const sendButton = showButton();
 
     sendButton.addEventListener("click", function () {
@@ -110,7 +117,7 @@ function init() {
     });
   } else {
     console.log(
-      "Sapphire not found in URL. Data extraction and API call skipped."
+      "Button not shown. Either not a product detail page or 'sapphire' not found in URL."
     );
   }
 }
