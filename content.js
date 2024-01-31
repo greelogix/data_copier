@@ -16,9 +16,11 @@ function showButton() {
 function extractData() {
   console.log("Extracting data from the page...");
 
-  const title = document.querySelector(".t4s-product__title")
-    ? document.querySelector(".t4s-product__title").textContent
-    : "";
+  // const title = document.querySelector(".t4s-product__title")
+  //   ? document.querySelector(".t4s-product__title").textContent
+  //   : "";
+  const title = document.title.replace(' – SapphireOnline Store', '').trim();
+
   const content = document.querySelector("#content1")
     ? document.querySelector("#content1").innerHTML
     : "";
@@ -78,8 +80,9 @@ function sendDataToAPI(data) {
     regular_price: data.regularPrice,
     sale_price: data.salePrice,
     sku: data.sku,
-    featured_image: data.featuredImage,
+    // featured_image: data.featuredImage,
     images: data.images,
+    category: ['Sapphire'],
     store_link: window.location.href,
   };
 
