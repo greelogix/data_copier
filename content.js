@@ -25,10 +25,13 @@ function extractData() {
   const regularPrice = document.querySelector(".t4s-product-price .money")
     ? document.querySelector(".t4s-product-price .money").textContent
     : "";
+
   const regularPriceNumeric = regularPrice
-    ? parseInt(regularPrice.replace(/[^\d]/g, ""))
+    ? parseInt(regularPrice.replace(/[^\d]/g, "")) / 100
     : 0;
-  const salePrice = regularPriceNumeric - 50;
+
+  const salePrice = regularPriceNumeric < 50 ? 0 : regularPriceNumeric - 50;
+
   const sku = document.querySelector(".t4s-sku-wrapper .t4s-sku-value")
     ? document.querySelector(".t4s-sku-wrapper .t4s-sku-value").textContent
     : "";
@@ -104,8 +107,10 @@ function sendDataToAPI(data) {
 
 function init() {
   const currentUrl = window.location.href;
-  const urlPattern = /\/collections\/.*\/products\/[a-zA-Z0-9-]+$/;
-  const isProductDetailPage = urlPattern.test(currentUrl);
+  const collectionPattern = /\/collections\/.*\/products\/[a-zA-Z0-9-]+$/;
+  const specificPattern = /\/products\/[a-zA-Z0-9-]+$/;
+  const isProductDetailPage =
+    collectionPattern.test(currentUrl) || specificPattern.test(currentUrl);
   const isSapphirePage = currentUrl.includes("sapphire");
 
   if (isProductDetailPage && isSapphirePage) {
